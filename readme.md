@@ -39,16 +39,44 @@ Decidí usar la libreria Bull porque es de las mejores que hay. Como expliqué a
 ```
 
 2. Ejecutarlo:
-Si se va a ejecutar con los ejemplos de la prueba este es el comando.
+   Si se va a ejecutar con los ejemplos de la prueba este es el comando.
+
+Para Linux:
 
 ```bash
 cat students.txt | node index.js
 ```
 
-sino, teniendo en cuenta que los registros deben seguir el esquema proporcionado en el enunciado.
+En el caso de Windows:
+
+```bash
+Get-Content students.txt | node index.js
+```
+
+ó
+
+```bash
+type students.txt | node index.js
+```
+
+sino si es otro archivo, teniendo en cuenta que los registros deben seguir el esquema proporcionado en el enunciado.
+
+Para Linux:
 
 ```bash
 cat archivo.txt | node index.js
+```
+
+En el caso de Windows:
+
+```bash
+Get-Content archivo.txt | node index.js
+```
+
+ó
+
+```bash
+type archivo.txt | node index.js
 ```
 
 ### test
