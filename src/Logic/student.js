@@ -1,4 +1,4 @@
-import DataAccess from "../Repository/data.js"
+import DataAccess from "../Repository/student.js"
 import Queue from 'bull'
 import { config } from "dotenv"
 config()
@@ -7,17 +7,14 @@ const { REDIS_URI } = process.env
 const studentQueue = new Queue('student_queue', REDIS_URI)
 
 export class Logic {
-    _students
-    _daysAttended
+    daysAttended
     constructor() {
         this.dataAccess = new DataAccess()
-        this._students = []
-        this._daysAttended = {}
+        this.daysAttended = {}
     }
 
 
     AddProcess() {
-
         this.dataAccess.on('data', (data) => {
             studentQueue.add({ students: data }, {
                 attempts: 2
@@ -38,12 +35,13 @@ export class Logic {
                     const name = student.split(' ')[1]
 
                     const loggedMinutes = this.calculateLoggedMinutes(student)
-                    if (!this._daysAttended[name]) {
-                        this._daysAttended[name] = { days: 0, minutes: 0 }
+                    
+                    if (!this.daysAttended[name]) {
+                        this.daysAttended[name] = { days: 0, minutes: 0 }
                     }
 
-                    this._daysAttended[name].days += 1
-                    this._daysAttended[name].minutes += loggedMinutes
+                    this.daysAttended[name].days += 1
+                    this.daysAttended[name].minutes += loggedMinutes
                 }
                 done()
                 resolve()
@@ -62,14 +60,5 @@ export class Logic {
         return loggedMinutes
     }
 
-    show() {
-        const result = Object.entries(this._daysAttended)
-        const students = result.sort((a, b) => a[1].minutes > b[1].minutes)
-        for (const student of students) {
-            if (student[1].minutes < 5) continue
-
-            console.log(`${student[0]}: ${student[1].minutes} minutes in ${student[1].days} ${student[1].days > 1 ? 'days' : 'day'}  `)
-        }
-    }
 
 }
