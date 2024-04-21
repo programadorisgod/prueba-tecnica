@@ -1,5 +1,7 @@
-import { Logic } from "./Logic/logic.js";
+import { Logic } from "./src/Logic/logic.js"
 
 const logicLayer = new Logic()
-logicLayer.AddProcces()
-logicLayer.ProccesStudent()
+logicLayer.AddProcess()
+logicLayer.ProcessStudent().then(() => {
+    logicLayer.show()
+})

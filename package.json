@@ -11,5 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "bull": "^4.12.2"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5"
   }
 }
