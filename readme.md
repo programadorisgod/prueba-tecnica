@@ -79,6 +79,10 @@ Get-Content archivo.txt | node index.js
 type archivo.txt | node index.js
 ```
 
+
+Nota:
+Debemos esperar, porque al ser una cola de procesos, se toma su tiempo.
+
 ### test
 
 Con respecto a los test, decidí usar la libreria jest, para poder hacer mock de la información y así entrar en un entorno simulado, para verificar que el código hace lo que se espera.
