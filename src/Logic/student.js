@@ -4,14 +4,7 @@ import { config } from "dotenv"
 config()
 
 const { REDIS_URI } = process.env
-const studentQueue = new Queue('student_queue', REDIS_URI, {
-    settings: {
-        try: {
-            enable: true,
-            backoff: { type: 'exponential', delay: 10000 }
-        }
-    }
-})
+const studentQueue = new Queue('student_queue', REDIS_URI)
 
 export class Logic {
     daysAttended
@@ -61,12 +54,14 @@ export class Logic {
                         }
 
                         this.daysAttended[name].minutes += loggedMinutes
+                        done()
+                        resolve()
                     } catch (error) {
+                        done(error)
                         console.log(error);
                     }
                 }
-                resolve()
-                done()
+
             })
         })
     }
