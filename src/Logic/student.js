@@ -30,17 +30,23 @@ export class Logic {
 
                 for (const student of students) {
                     const command = student.split(' ')[0]
+                    let loggedMinutes = 0
 
-                    if (command !== 'Presence') continue
+
                     const name = student.split(' ')[1]
 
-                    const loggedMinutes = this.calculateLoggedMinutes(student)
-                    
+
                     if (!this.daysAttended[name]) {
                         this.daysAttended[name] = { days: 0, minutes: 0 }
                     }
 
-                    this.daysAttended[name].days += 1
+                    /* Solamente si cuenta con presencia calcularemos los minutos que ha estado presente */
+
+                    if (command === 'Presence') {
+                        loggedMinutes = this.calculateLoggedMinutes(student)
+                        this.daysAttended[name].days += 1
+                    }
+
                     this.daysAttended[name].minutes += loggedMinutes
                 }
                 done()
